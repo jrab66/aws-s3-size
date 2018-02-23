@@ -1,0 +1,61 @@
+   
+     ----------------------------------------- AWS S3 Bucket Size utility usage ------------------------------------------
+    
+     This utility reports the the size of AWS S3 buckets    
+    
+     This script will: 
+     * Capture the average size of AWS S3 buckets for a given time period 
+     * Write the average size of AWS S3 buckets to a JSON file for each account  
+     * Write the size of AWS S3 buckets in Bytes, Megabytes, Gigabytes, and Terabytes to a CSV file for each account    
+    
+    ----------------------------------------------------------------------------------------------------------------------
+    
+     Usage:
+             aws-s3-size.sh -p AWS_CLI_profile -s start timestamp -e end timestamp 
+    
+             Optional parameters: -t storage type -d period 
+    
+             Example: aws-s3-size.sh -p prod -s 2018-02-12T02:00:00 -e 2018-02-12T03:59:59
+    
+             Note: AWS accounts are determined by the AWS CLI profile 
+    
+     Where: 
+      -p - Name of the AWS CLI cli_profile (i.e. what you would pass to the --profile parameter in an AWS CLI command)
+           or the name of a text file containing a list of AWS CLI profiles for multiple accounts
+             Example: -p myAWSCLIprofile 
+             Example: -p s3-size-profile-driver-file.txt 
+        
+      -s - The GMT/UTC/Zulu timestamp to begin the bucket average size calculation in the format: YYYY-MM-DDTHH:MM:SS  
+           Example: -s 2018-02-12T00:00:00
+        
+      -e - The GMT/UTC/Zulu timestamp to end the bucket average size calculation in the format: YYYY-MM-DDTHH:MM:SS  
+           Example: -e 2018-02-12T01:00:00
+        
+      -d - The period in seconds to sample the S3 bucket size. Default is 3600. Valid entries follow.
+           Example: -d 60
+           Example: -d 300
+           Example: -d 3600
+           Documentation is here: https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/get-metric-statistics.html
+        
+      -t - The S3 storage type to measure. Default is 'all'. Valid entries follow. 
+           Example: -t all
+           Example: -t StandardStorage
+           Example: -t StandardIAStorage
+           Example: -t ReducedRedundancyStorage
+           Documentation is here: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/s3-metricscollected.html
+            
+            
+      -b - Verbose console output. Set to 'y' for verbose console output. Temp files are not deleted. 
+             Example: -b y 
+    
+      -g - Logging on / off. Default is off. Set to 'y' to create an info log. Set to 'z' to create a debug log. 
+           Note: logging mode is slower and debug log mode will be very slow and resource intensive on large jobs. 
+             Example: -g y 
+    
+      -h - Display this message
+             Example: -h 
+    
+      ---version - Display the script version
+             Example: --version 
+    
+ 
