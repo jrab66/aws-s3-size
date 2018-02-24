@@ -30,7 +30,7 @@
 # 
 # File: aws-s3-size.sh
 #
-script_version=0.0.44   
+script_version=0.0.45   
 #
 #  Dependencies:
 #  - 'aws-services-snapshot-driver.txt' or custom driver file containing AWS describe/list commands 
@@ -97,7 +97,7 @@ script_version=0.0.44
 #
 #
 # Roadmap:
-#  * storage type "all"
+#  * summary report
 # 
 #
 ###############################################################################
