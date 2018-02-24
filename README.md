@@ -6,7 +6,7 @@ This utility produces output that:
 
 * Answer the question: "What size are the AWS S3 buckets in our multiple AWS accounts?"
 * Create an audit trail of AWS S3 bucket size 
-* Are suitable for use in databases, spreadsheets, or reports
+* Is suitable for use in databases, spreadsheets, or reports
 
 This utility provides S3 bucket size functionality unavailable in the AWS console or directly via the AWS CLI API. 
 
