@@ -2977,7 +2977,14 @@ do
 			feed_write_log="command: aws cloudwatch get-metric-statistics --namespace AWS/S3 --start-time "$timestamp_start" --end-time "$timestamp_end" --period "$timestamp_period" --statistics Average --metric-name BucketSizeBytes --dimensions Name=BucketName,Value="$bucket_name" Name=StorageType,Value="$storage_type_line" --profile "$cli_profile_line_strip" "
 			fnWriteLog ${LINENO} "$feed_write_log"
 			fnWriteLog ${LINENO} ""
-			bucket_size_json_results="$(aws cloudwatch get-metric-statistics --namespace AWS/S3 --start-time "$timestamp_start" --end-time "$timestamp_end" --period "$timestamp_period" --statistics Average --metric-name BucketSizeBytes --dimensions Name=BucketName,Value="$bucket_name" Name=StorageType,Value="$storage_type_line" --profile "$cli_profile_line_strip")"
+			region_specific=$(aws s3api get-bucket-location --bucket $bucket_name --profile "$cli_profile_line_strip"  | jq -r '.LocationConstraint')
+			# region checker
+			fnWriteLog "region: " ${region_specific} 
+			if [ $region_specific == "null" ]; then
+				bucket_size_json_results="$(aws cloudwatch get-metric-statistics --namespace AWS/S3 --start-time "$timestamp_start" --end-time "$timestamp_end" --period "$timestamp_period" --statistics Average --metric-name BucketSizeBytes --dimensions Name=BucketName,Value="$bucket_name" Name=StorageType,Value="$storage_type_line" --profile "$cli_profile_line_strip")"
+			else
+				bucket_size_json_results="$(aws cloudwatch get-metric-statistics --namespace AWS/S3 --start-time "$timestamp_start" --end-time "$timestamp_end" --period "$timestamp_period" --statistics Average --metric-name BucketSizeBytes --dimensions Name=BucketName,Value="$bucket_name" Name=StorageType,Value="$storage_type_line" --profile "$cli_profile_line_strip" --region "$region_specific")"
+			fi
             #
             # check for errors from the AWS API  
             if [ "$?" -ne 0 ]
